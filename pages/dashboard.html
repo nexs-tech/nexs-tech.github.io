@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard – Safety Union Bank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/sub-theme.css">
+<script src="https://cdn.jsdelivr.net/npm/fscss@1.2.5/runtime.min.js" async></script>
+<style>
+  /* st-core.fscss v2 charts – pure CSS */
+  @import((*) from st-core@v2)
+  @st-root()
+  @arr spendData[42, 55, 38, 67, 78, 60, 59, 81, 90, 70, 65, 75]
+  @arr incomeData[30, 45, 52, 40, 68, 55, 80, 62, 71, 85, 78, 90]
+  @st-chart-fill(.chart-fill, spendData)
+  @st-chart-line(.chart-line, spendData)
+  .st-chart {
+    @st-chart-points(spendData)
+    position: relative;
+    height: 200px;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(2,8,40,.4);
+  }
+  .st-chart .chart-fill {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(53,212,255,.45), transparent);
+  }
+  .st-chart .chart-line {
+    position: absolute; inset: 0;
+    filter: drop-shadow(0 0 6px rgba(53,212,255,.8));
+  }
+
+  /* keep original card styles from source */
+  .c-card{grid-column:span 5;display:grid;place-items:center;padding:34px 24px;perspective:1100px;overflow:hidden}
+  .c-card::before{
+    content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(53,212,255,.35),transparent 65%);filter:blur(10px);
+  }
+  .vcard{
+    --mx:50%;--my:30%;
+    position:relative;width:min(100%,400px);aspect-ratio:1.586;border-radius:24px;padding:24px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    background:
+      radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.35),transparent 38%),
+      radial-gradient(circle at 100% 0,rgba(53,212,255,.8),transparent 55%),
+      repeating-radial-gradient(circle at 0 100%,transparent 0 22px,rgba(255,255,255,.06) 22px 23px),
+      linear-gradient(135deg,#2f6bff 0%,#1738c9 55%,#0a1f7a 100%);
+    box-shadow:0 50px 80px -30px rgba(0,10,110,.95),0 0 0 1px rgba(255,255,255,.18),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -40px 60px -30px rgba(0,0,60,.6);
+    transform-style:preserve-3d;transition:transform .25s ease-out;
+  }
+  .vcard .row{display:flex;justify-content:space-between;align-items:center;transform:translateZ(40px)}
+  .vcard .brand{font-family:var(--display);font-weight:800;font-size:1.25rem;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+  .vcard .brand svg{width:26px;height:26px}
+  .chip{width:46px;height:34px;border-radius:8px;background:linear-gradient(135deg,#e6f1ff,#8fb2ff 50%,#d9e8ff);box-shadow:inset 0 0 0 1px rgba(0,0,50,.25);transform:translateZ(30px)}
+  .num{font-family:var(--display);font-size:clamp(1.05rem,2.6vw,1.35rem);letter-spacing:.14em;font-weight:500;text-shadow:0 2px 10px rgba(0,0,80,.6);transform:translateZ(50px)}
+  .vcard small{display:block;color:rgba(232,240,255,.75);font-size:.74rem;margin-bottom:2px}
+  .vcard .meta{display:flex;justify-content:space-between;align-items:flex-end;transform:translateZ(40px);font-weight:600}
+  .lockrow{position:absolute;inset:auto 0 18px 0;display:flex;justify-content:center;gap:10px;z-index:2}
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;font-size:.88rem;font-weight:600;
+    background:rgba(2,8,44,.7);border:1px solid var(--edge);transition:.2s
+  }
+  .pill:hover{background:rgba(31,85,255,.35)}
+  .pill svg{width:16px;height:16px}
+  .vcard.locked{filter:saturate(.2) brightness(.7)}
+
+  .c-flow{grid-column:span 7}
+  .big{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,4.6vw,3.6rem);letter-spacing:-.04em;line-height:1}
+  .big sup{font-size:.45em;color:var(--mist);margin-right:4px;vertical-align:.7em;font-weight:600}
+  .delta{display:inline-flex;align-items:center;gap:6px;color:var(--good);font-weight:600;font-size:.92rem;margin-left:10px}
+  .kpis{display:flex;gap:28px;margin:16px 0 8px;flex-wrap:wrap}
+  .kpis div{font-size:.9rem;color:var(--mist)}
+  .kpis b{display:block;color:var(--ice);font-family:var(--display);font-size:1.25rem;margin-top:2px}
+
+  .c-safe{grid-column:span 5}
+  .gauge{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+  .ring{position:relative;width:132px;height:132px;flex:none}
+  .ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .ring .t{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:800;font-size:2rem;line-height:1}
+  .ring .t small{display:block;font-family:var(--body);font-weight:500;font-size:.75rem;color:var(--mist);margin-top:3px}
+  .checks{display:grid;gap:10px;flex:1;min-width:180px}
+  .chk{display:flex;gap:10px;align-items:center;font-size:.92rem}
+  .chk i{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:rgba(61,240,180,.15);color:var(--good);flex:none}
+  .chk i svg{width:13px;height:13px}
+  .chk.todo i{background:rgba(255,196,107,.15);color:var(--warn)}
+  .limit{margin-top:22px}
+  .limit .l{display:flex;justify-content:space-between;font-size:.9rem;color:var(--mist);margin-bottom:8px}
+  .limit .l b{color:var(--ice)}
+  .track{height:16px;border-radius:10px;background:rgba(2,8,40,.75);box-shadow:inset 0 2px 5px rgba(0,0,0,.5);overflow:hidden}
+  .fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--cobalt),var(--cyan));transition:width .9s}
+
+  .c-tx{grid-column:span 7}
+  .tx{display:grid;gap:4px}
+  .t{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;padding:10px 8px;border-radius:16px;transition:background .2s}
+  .t:hover{background:rgba(61,139,255,.1)}
+  .t .ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-family:var(--display);font-weight:700;background:linear-gradient(145deg,rgba(61,139,255,.45),rgba(31,85,255,.2));border:1px solid var(--edge)}
+  .t .n{font-weight:600}
+  .t .d{font-size:.84rem;color:var(--mist);margin-top:2px}
+  .t .a{font-family:var(--display);font-weight:700}
+  .t .a.in{color:var(--good)}
+
+  .c-goals{grid-column:span 5}
+  .goals{display:grid;gap:18px}
+  .goal{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:center}
+  .goal svg{width:64px;height:64px;transform:rotate(-90deg)}
+  .goal b{display:block;font-family:var(--display)}
+  .goal span{font-size:.86rem;color:var(--mist)}
+  .quick{display:flex;gap:10px;margin-top:22px}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail" aria-label="Main">
+    <svg class="logo" viewBox="0 0 48 48" aria-hidden="true">
+      <defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fd8ff"/><stop offset="1" stop-color="#1f55ff"/></linearGradient></defs>
+      <path d="M24 3 42 10v13c0 11-7.5 19.5-18 22C13.5 42.5 6 34 6 23V10z" fill="url(#lg2)"/>
+      <path d="M16 17v9a8 8 0 0 0 16 0v-9" fill="none" stroke="#02105c" stroke-width="3.5" stroke-linecap="round"/>
+    </svg>
+    <nav class="nav" id="nav">
+      <a href="dashboard.html" aria-current="page" title="Home" data-ic="home"></a>
+      <a href="request.html" title="Request payment" data-ic="link"></a>
+      <a href="transfers.html" title="Transfers" data-ic="swap"></a>
+      <a href="history.html" title="History" data-ic="chart"></a>
+      <a href="withdraw.html" title="Withdraw" data-ic="wallet"></a>
+      <a href="pro.html" title="Pro & Safety" data-ic="shield"></a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="nav">
+      <a href="settings.html" title="Settings" data-ic="gear"></a>
+      <button id="logoutBtn" title="Log out" data-ic="logout"></button>
+    </div>
+  </aside>
+
+  <main>
+    <header class="top">
+      <div>
+        <h1 id="greetLine">Good evening</h1>
+        <p>Your money is protected and moving the right way.</p>
+      </div>
+      <div class="tools">
+        <label class="search">
+          <span data-ic="search"></span>
+          <input type="search" placeholder="Search payments, people, cards" aria-label="Search">
+        </label>
+        <div class="avatar" id="avatar">TA</div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- card -->
+      <section class="pane c-card" aria-label="Your card">
+        <div class="vcard" id="vcard">
+          <div class="row">
+            <div class="brand">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3 42 10v13c0 11-7.5 19.5-18 22C13.5 42.5 6 34 6 23V10z" fill="#fff" opacity=".95"/><path d="M16 17v9a8 8 0 0 0 16 0v-9" fill="none" stroke="#1738c9" stroke-width="3.5" stroke-linecap="round"/></svg>
+              SUB
+            </div>
+            <span style="font-weight:600;opacity:.85">Union Platinum</span>
+          </div>
+          <div class="chip"></div>
+          <div>
+            <div class="num" id="cnum">4821 •••• •••• 2206</div>
+            <div class="meta" style="margin-top:14px">
+              <div><small>Card holder</small><span id="cardHolder">Tobi Adeyemi</span></div>
+              <div><small>Expires</small>09/29</div>
+            </div>
+          </div>
+        </div>
+        <div class="lockrow">
+          <button class="pill" id="freeze"><span data-ic="lock"></span><span id="freezeTxt">Freeze card</span></button>
+          <button class="pill" id="reveal"><span data-ic="eye"></span><span id="revealTxt">Show number</span></button>
+        </div>
+      </section>
+
+      <!-- balance + flow (st-core chart) -->
+      <section class="pane c-flow" aria-label="Balance and cash flow">
+        <div class="head">
+          <div>
+            <p class="sub">Total balance</p>
+            <div class="big"><sup>$</sup><span id="bal">52,625.95</span><span class="delta">+4.2% this month</span></div>
+          </div>
+          <div class="seg" role="group" aria-label="Flow type" id="flowType">
+            <button aria-pressed="true" data-v="spend">Spending</button>
+            <button aria-pressed="false" data-v="income">Income</button>
+          </div>
+        </div>
+        <div class="kpis">
+          <div>Checking<b>$12,480.20</b></div>
+          <div>Savings<b>$31,905.75</b></div>
+          <div>Union Vault<b>$8,240.00</b></div>
+        </div>
+        <div class="st-chart" id="flowChart">
+          <div class="chart-fill"></div>
+          <div class="chart-line"></div>
+        </div>
+        <p class="sub" style="margin-top:12px" id="insight">Spending trend over the last 12 periods · Powered by st-core.fscss v2</p>
+      </section>
+
+      <!-- safety -->
+      <section class="pane c-safe" aria-label="Safety score">
+        <div class="head"><div><h2>Safety score</h2><p class="sub">Updated a minute ago</p></div></div>
+        <div class="gauge">
+          <div class="ring">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(2,8,40,.8)" stroke-width="11"/>
+              <circle id="gArc" cx="60" cy="60" r="52" fill="none" stroke="url(#gg)" stroke-width="11" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327" style="transition:stroke-dashoffset 1.4s cubic-bezier(.2,.9,.2,1) .5s;filter:drop-shadow(0 0 8px rgba(53,212,255,.8))"/>
+              <defs><linearGradient id="gg"><stop offset="0" stop-color="#1f55ff"/><stop offset="1" stop-color="#3df0b4"/></linearGradient></defs>
+            </svg>
+            <div class="t"><div>92<small>out of 100</small></div></div>
+          </div>
+          <div class="checks">
+            <div class="chk"><i data-ic="check"></i>Two step login is on</div>
+            <div class="chk"><i data-ic="check"></i>3 trusted devices</div>
+            <div class="chk"><i data-ic="check"></i>Card alerts are instant</div>
+            <div class="chk todo"><i data-ic="alert"></i>Add a recovery contact</div>
+          </div>
+        </div>
+        <div class="limit">
+          <div class="l"><span>Daily transfer limit</span><b id="limTxt">$2,500 of $10,000</b></div>
+          <div class="track"><div class="fill" id="limFill" style="width:25%"></div></div>
+        </div>
+      </section>
+
+      <!-- transactions -->
+      <section class="pane c-tx" aria-label="Recent activity">
+        <div class="head">
+          <div><h2>Recent activity</h2><p class="sub">Last payments · fees applied</p></div>
+          <a href="history.html" class="btn ghost sm">View all</a>
+        </div>
+        <div class="tx" id="tx"></div>
+      </section>
+
+      <!-- goals / quick actions -->
+      <section class="pane c-goals" aria-label="Quick actions">
+        <div class="head"><div><h2>Quick actions</h2><p class="sub">Request, transfer, withdraw</p></div></div>
+        <div class="quick" style="flex-direction:column">
+          <a href="request.html" class="btn">Create payment request</a>
+          <a href="transfers.html" class="btn ghost">SUB-to-SUB transfer</a>
+          <a href="withdraw.html" class="btn ghost">Request withdrawal</a>
+        </div>
+        <div class="charge-note" style="margin-top:18px">
+          Protection fee: <b>1.5%</b> on inbound Paystack · <b>1% + fixed</b> on withdrawals · <b>Free</b> SUB-to-SUB. Pro pays half.
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="../js/sub-core.js"></script>
+<script type="module">
+import {
+  supabase, requireAuth, getProfile, greetingFor, initials, tables
+} from '../js/supabase-config.js';
+
+const session = await requireAuth('/pages/dashboard.html');
+if (!session) throw new Error('redirecting');
+
+const profile = await getProfile();
+const name = profile?.full_name || session.user.email?.split('@')[0] || 'there';
+const ini = profile?.initials || initials(name);
+const balance = ((profile?.balance_cents ?? 0) / 100);
+
+document.getElementById('greetLine').textContent = greetingFor(name);
+document.getElementById('avatar').textContent = ini;
+document.getElementById('cardHolder').textContent = name;
+document.getElementById('bal').textContent = balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+if (profile?.card_frozen) {
+  document.getElementById('vcard').classList.add('locked');
+  document.getElementById('freezeTxt').textContent = 'Unfreeze card';
+}
+
+const score = profile?.safety_score ?? 92;
+setTimeout(() => {
+  document.getElementById('gArc').style.strokeDashoffset = 327 * (1 - score / 100);
+  const t = document.querySelector('.ring .t div');
+  if (t) t.innerHTML = score + '<small>out of 100</small>';
+}, 80);
+
+document.getElementById('logoutBtn').onclick = async () => {
+  await supabase.auth.signOut();
+  location.href = 'login.html';
+};
+
+/* card tilt + freeze/reveal */
+const vc = document.getElementById('vcard');
+const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+if (!reduce) {
+  vc.addEventListener('pointermove', e => {
+    const r = vc.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    vc.style.transform = `rotateY(${(x - .5) * 22}deg) rotateX(${(.5 - y) * 22}deg) scale(1.03)`;
+    vc.style.setProperty('--mx', x * 100 + '%');
+    vc.style.setProperty('--my', y * 100 + '%');
+  });
+  vc.addEventListener('pointerleave', () => {
+    vc.style.transform = '';
+    vc.style.setProperty('--mx', '50%');
+    vc.style.setProperty('--my', '30%');
+  });
+}
+let frozen = !!profile?.card_frozen, shown = false;
+document.getElementById('freeze').onclick = async () => {
+  frozen = !frozen;
+  vc.classList.toggle('locked', frozen);
+  document.getElementById('freezeTxt').textContent = frozen ? 'Unfreeze card' : 'Freeze card';
+  if (profile) {
+    await supabase.from(tables.profiles).update({ card_frozen: frozen }).eq('id', profile.id);
+  }
+  toast(frozen ? 'Card frozen' : 'Card active');
+};
+function maskNum() {
+  const last4 = profile?.card_last4 || '2206';
+  document.getElementById('cnum').textContent = shown
+    ? `4821 0093 7714 ${last4}`
+    : `4821 •••• •••• ${last4}`;
+}
+document.getElementById('reveal').onclick = () => {
+  shown = !shown;
+  document.getElementById('revealTxt').textContent = shown ? 'Hide number' : 'Show number';
+  maskNum();
+};
+maskNum();
+
+/* recent txs from ledger */
+const { data: txs } = await supabase
+  .from(tables.transactions)
+  .select('*')
+  .order('created_at', { ascending: false })
+  .limit(5);
+
+const fallback = [
+  ['Spotify', 'S', 'Subscription · fee $0.18', -12.17, 'out'],
+  ['Amara Eze', 'A', 'Paystack request · fee $6.30', 413.70, 'in'],
+  ['Green Basket', 'G', 'Groceries', -86.42, 'out'],
+];
+
+function renderTx(list) {
+  document.getElementById('tx').innerHTML = list.map(t => {
+    if (Array.isArray(t)) {
+      return `<div class="t"><div class="ic">${t[1]}</div><div><div class="n">${t[0]}</div><div class="d">${t[2]}</div></div><div class="a ${t[4]}">${t[3] > 0 ? '+' : ''}$${Math.abs(t[3]).toLocaleString('en-US', {minimumFractionDigits: 2})}</div></div>`;
+    }
+    const net = t.net_cents / 100;
+    const letter = (t.reason || t.type || '?')[0].toUpperCase();
+    return `<div class="t"><div class="ic">${letter}</div><div><div class="n">${t.reason || t.type}</div><div class="d">${t.type} · fee $${(t.fee_cents/100).toFixed(2)}</div></div><div class="a ${net >= 0 ? 'in' : 'out'}">${net >= 0 ? '+' : ''}$${Math.abs(net).toLocaleString('en-US', {minimumFractionDigits: 2})}</div></div>`;
+  }).join('');
+}
+
+if (txs && txs.length) renderTx(txs);
+else renderTx(fallback);
+</script>
+</body>
+</html>
