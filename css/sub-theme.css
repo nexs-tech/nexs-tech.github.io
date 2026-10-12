@@ -215,3 +215,12 @@ td.amount.out{color:var(--ice)}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
 }
+
+/* step-up modal + misc added for backend integration */
+.modal-back{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(2,7,24,.7);backdrop-filter:blur(8px)}
+.modal{width:min(92vw,380px);padding:26px;border-radius:24px;border:1px solid var(--edge);
+  background:linear-gradient(165deg,rgba(42,88,235,.3),rgba(6,20,86,.9));box-shadow:0 40px 80px -20px rgba(0,6,60,.95)}
+.modal .btn{flex:1}
+.qr{background:#fff;border-radius:14px;padding:10px;width:176px;height:176px;margin:12px 0}
+.qr img{width:100%;height:100%;display:block}
+.mono{font-family:ui-monospace,Menlo,monospace;word-break:break-all;font-size:.85rem;color:var(--mist)}
