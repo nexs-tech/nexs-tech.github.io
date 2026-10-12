@@ -6,8 +6,8 @@ compatibility_date = "2026-10-01"
 routes = [{ pattern = "sub.example.com/api/*", zone_name = "example.com" }]
 
 [vars]
-APP_ORIGIN = "https://sub.example.com"      # exact origin, no trailing slash
-SUPABASE_URL = "https://YOURPROJECT.supabase.co"
+APP_ORIGIN = "https://sub.devtem.org"      # exact origin, no trailing slash
+SUPABASE_URL = "https://ostmbucbsptftvbwhmjc.supabase.co"
 PAYSTACK_COUNTRY = "nigeria"
 PAYOUT_CURRENCY = "NGN"
 NEW_PAYOUT_COOLDOWN_HOURS = "24"            # set "0" only for testing
