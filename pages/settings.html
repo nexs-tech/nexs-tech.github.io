@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Settings – SUB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/sub-theme.css">
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <svg class="logo" viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fd8ff"/><stop offset="1" stop-color="#1f55ff"/></linearGradient></defs><path d="M24 3 42 10v13c0 11-7.5 19.5-18 22C13.5 42.5 6 34 6 23V10z" fill="url(#lg)"/><path d="M16 17v9a8 8 0 0 0 16 0v-9" fill="none" stroke="#02105c" stroke-width="3.5" stroke-linecap="round"/></svg>
+    <nav class="nav">
+      <a href="dashboard.html" data-ic="home"></a>
+      <a href="request.html" data-ic="link"></a>
+      <a href="transfers.html" data-ic="swap"></a>
+      <a href="history.html" data-ic="chart"></a>
+      <a href="withdraw.html" data-ic="wallet"></a>
+      <a href="pro.html" data-ic="shield"></a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="nav"><a href="settings.html" aria-current="page" data-ic="gear"></a></div>
+  </aside>
+
+  <main>
+    <header class="top">
+      <div>
+        <h1>Settings</h1>
+        <p>Account, security, and stored payout details</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="pane" style="grid-column:span 6">
+        <h2>Profile</h2>
+        <div class="field" style="margin-top:16px">
+          <label>Name</label>
+          <input type="text" id="setName" readonly>
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="setEmail" readonly>
+        </div>
+        <div class="field">
+          <label>Plan</label>
+          <input type="text" id="setPlan" readonly>
+        </div>
+      </section>
+
+      <section class="pane" style="grid-column:span 6">
+        <h2>Security</h2>
+        <div id="mfaBox" style="margin-top:16px"></div>
+        <div class="checks" style="margin-top:16px;display:none">
+          <div class="chk" style="display:flex;gap:10px;align-items:center;margin-bottom:10px"><span data-ic="check" style="width:22px;height:22px;display:grid;place-items:center;background:rgba(61,240,180,.15);color:var(--good);border-radius:7px"></span> Two-step login enabled</div>
+          <div class="chk" style="display:flex;gap:10px;align-items:center;margin-bottom:10px"><span data-ic="check" style="width:22px;height:22px;display:grid;place-items:center;background:rgba(61,240,180,.15);color:var(--good);border-radius:7px"></span> Instant card alerts</div>
+          <div class="chk" style="display:flex;gap:10px;align-items:center"><span data-ic="alert" style="width:22px;height:22px;display:grid;place-items:center;background:rgba(255,196,107,.15);color:var(--warn);border-radius:7px"></span> Add recovery contact</div>
+        </div>
+        
+      </section>
+
+      <section class="pane" style="grid-column:span 12">
+        <h2>Stored payout accounts</h2>
+        <p class="sub">Used as default destinations for withdrawals</p>
+        <div class="table-wrap" style="margin-top:12px">
+          <table>
+            <thead><tr><th>Bank</th><th>Account</th><th>Name</th><th></th></tr></thead>
+            <tbody id="payBody"></tbody>
+          </table>
+        </div>
+        <form id="addBank" style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end">
+          <div class="field" style="margin:0"><label for="bankSel">Bank</label><select id="bankSel" required></select></div>
+          <div class="field" style="margin:0"><label for="acctNo">Account number</label><input id="acctNo" inputmode="numeric" pattern="\d{6,20}" required></div>
+          <button class="btn sm" type="submit">Add account</button>
+        </form>
+        <p class="sub" style="margin-top:10px">We verify the account name with the bank. New accounts unlock for withdrawals after a short safety delay.</p>
+      </section>
+
+      <section class="pane" style="grid-column:span 12">
+        <h2>Session</h2>
+        <button class="btn danger sm" id="logout">Log out</button>
+      </section>
+    </div>
+  </main>
+</div>
+<script src="../js/sub-core.js"></script>
+
+<script src="../js/pages/settings.js"></script>
+</body>
+</html>

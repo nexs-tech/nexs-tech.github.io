@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard – Safety Union Backup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/sub-theme.css">
+<script src="https://cdn.jsdelivr.net/npm/fscss@1.2.5/runtime.min.js" async></script>
+<style>
+  /* st-core.fscss v2 charts – pure CSS */
+  @import((*) from st-core@v2)
+  @st-root()
+  @arr spendData[28, 23, 38, 78, 65, 60, 52, 55, 72, 90, 82, 95]
+  @arr incomeData[56, 67, 72, 40, 41, 55, 80, 82, 71, 67, 78, 90]
+  @st-chart-fill(.chart-fill, spendData)
+  @st-chart-line(.chart-line, spendData)
+  .st-chart {
+    @st-chart-points(spendData)
+    position: relative;
+    height: 200px;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(2,8,40,.4);
+  }
+  .st-chart .chart-fill {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(53,212,255,.45), transparent);
+    transition: clip-path 1s ease-out;
+  }
+  .st-chart .chart-line {
+    position: absolute; inset: 0;
+    filter: drop-shadow(0 0 6px rgba(53,212,255,.8));
+    transition: clip-path 1s ease-out;
+  }
+
+  /* keep original card styles from source */
+  .c-card{grid-column:span 5;display:grid;place-items:center;padding:34px 24px;perspective:1100px;overflow:hidden}
+  .c-card::before{
+    content:"";position:absolute;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(53,212,255,.35),transparent 65%);filter:blur(10px);
+  }
+  .vcard{
+    --mx:50%;--my:30%;
+    position:relative;width:min(100%,400px);aspect-ratio:1.586;border-radius:24px;padding:24px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    background:
+      radial-gradient(circle at var(--mx) var(--my),rgba(255,255,255,.35),transparent 38%),
+      radial-gradient(circle at 100% 0,rgba(53,212,255,.8),transparent 55%),
+      repeating-radial-gradient(circle at 0 100%,transparent 0 22px,rgba(255,255,255,.06) 22px 23px),
+      linear-gradient(135deg,#2f6bff 0%,#1738c9 55%,#0a1f7a 100%);
+    box-shadow:0 50px 80px -30px rgba(0,10,110,.95),0 0 0 1px rgba(255,255,255,.18),inset 0 1px 0 rgba(255,255,255,.5),inset 0 -40px 60px -30px rgba(0,0,60,.6);
+    transform-style:preserve-3d;transition:transform .25s ease-out;
+  }
+  .vcard .row{display:flex;justify-content:space-between;align-items:center;transform:translateZ(40px)}
+  .vcard .brand{font-family:var(--display);font-weight:800;font-size:1.25rem;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+  .vcard .brand svg{width:26px;height:26px}
+  .chip{width:46px;height:34px;border-radius:8px;background:linear-gradient(135deg,#e6f1ff,#8fb2ff 50%,#d9e8ff);box-shadow:inset 0 0 0 1px rgba(0,0,50,.25);transform:translateZ(30px)}
+  .num{font-family:var(--display);font-size:clamp(1.05rem,2.6vw,1.35rem);letter-spacing:.14em;font-weight:500;text-shadow:0 2px 10px rgba(0,0,80,.6);transform:translateZ(50px)}
+  .vcard small{display:block;color:rgba(232,240,255,.75);font-size:.74rem;margin-bottom:2px}
+  .vcard .meta{display:flex;justify-content:space-between;align-items:flex-end;transform:translateZ(40px);font-weight:600}
+  .lockrow{position:absolute;inset:auto 0 18px 0;display:flex;justify-content:center;gap:10px;z-index:2}
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;font-size:.88rem;font-weight:600;
+    background:rgba(2,8,44,.7);border:1px solid var(--edge);transition:.2s
+  }
+  .pill:hover{background:rgba(31,85,255,.35)}
+  .pill svg{width:16px;height:16px}
+  .vcard.locked{filter:saturate(.2) brightness(.7)}
+
+  .c-flow{grid-column:span 7}
+  .big{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,4.6vw,3.6rem);letter-spacing:-.04em;line-height:1}
+  .big sup{font-size:.45em;color:var(--mist);margin-right:4px;vertical-align:.7em;font-weight:600}
+  .delta{display:inline-flex;align-items:center;gap:6px;color:var(--good);font-weight:600;font-size:.92rem;margin-left:10px}
+  .kpis{display:flex;gap:28px;margin:16px 0 8px;flex-wrap:wrap}
+  .kpis div{font-size:.9rem;color:var(--mist)}
+  .kpis b{display:block;color:var(--ice);font-family:var(--display);font-size:1.25rem;margin-top:2px}
+
+  .c-safe{grid-column:span 5}
+  .gauge{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+  .ring{position:relative;width:132px;height:132px;flex:none}
+  .ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .ring .t{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:800;font-size:2rem;line-height:1}
+  .ring .t small{display:block;font-family:var(--body);font-weight:500;font-size:.75rem;color:var(--mist);margin-top:3px}
+  .checks{display:grid;gap:10px;flex:1;min-width:180px}
+  .chk{display:flex;gap:10px;align-items:center;font-size:.92rem}
+  .chk i{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:rgba(61,240,180,.15);color:var(--good);flex:none}
+  .chk i svg{width:13px;height:13px}
+  .chk.todo i{background:rgba(255,196,107,.15);color:var(--warn)}
+  .limit{margin-top:22px}
+  .limit .l{display:flex;justify-content:space-between;font-size:.9rem;color:var(--mist);margin-bottom:8px}
+  .limit .l b{color:var(--ice)}
+  .track{height:16px;border-radius:10px;background:rgba(2,8,40,.75);box-shadow:inset 0 2px 5px rgba(0,0,0,.5);overflow:hidden}
+  .fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--cobalt),var(--cyan));transition:width .9s}
+
+  .c-tx{grid-column:span 7}
+  .tx{display:grid;gap:4px}
+  .t{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;padding:10px 8px;border-radius:16px;transition:background .2s}
+  .t:hover{background:rgba(61,139,255,.1)}
+  .t .ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-family:var(--display);font-weight:700;background:linear-gradient(145deg,rgba(61,139,255,.45),rgba(31,85,255,.2));border:1px solid var(--edge)}
+  .t .n{font-weight:600}
+  .t .d{font-size:.84rem;color:var(--mist);margin-top:2px}
+  .t .a{font-family:var(--display);font-weight:700}
+  .t .a.in{color:var(--good)}
+
+  .c-goals{grid-column:span 5}
+  .goals{display:grid;gap:18px}
+  .goal{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:center}
+  .goal svg{width:64px;height:64px;transform:rotate(-90deg)}
+  .goal b{display:block;font-family:var(--display)}
+  .goal span{font-size:.86rem;color:var(--mist)}
+  .quick{display:flex;gap:10px;margin-top:22px}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail" aria-label="Main">
+    <svg class="logo" viewBox="0 0 48 48" aria-hidden="true">
+      <defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fd8ff"/><stop offset="1" stop-color="#1f55ff"/></linearGradient></defs>
+      <path d="M24 3 42 10v13c0 11-7.5 19.5-18 22C13.5 42.5 6 34 6 23V10z" fill="url(#lg2)"/>
+      <path d="M16 17v9a8 8 0 0 0 16 0v-9" fill="none" stroke="#02105c" stroke-width="3.5" stroke-linecap="round"/>
+    </svg>
+    <nav class="nav" id="nav">
+      <a href="dashboard.html" aria-current="page" title="Home" data-ic="home"></a>
+      <a href="request.html" title="Request payment" data-ic="link"></a>
+      <a href="transfers.html" title="Transfers" data-ic="swap"></a>
+      <a href="history.html" title="History" data-ic="chart"></a>
+      <a href="withdraw.html" title="Withdraw" data-ic="wallet"></a>
+      <a href="pro.html" title="Pro & Safety" data-ic="shield"></a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="nav">
+      <a href="settings.html" title="Settings" data-ic="gear"></a>
+      <button id="logoutBtn" title="Log out" data-ic="logout"></button>
+    </div>
+  </aside>
+
+  <main>
+    <header class="top">
+      <div>
+        <h1>Good evening, <span id="greetName"></span></h1>
+        <p>Temporary vault · withdraw to your bank when ready</p>
+      </div>
+      <div class="tools">
+        <label class="search">
+          <span data-ic="search"></span>
+          <input type="search" placeholder="Search payments, people, cards" aria-label="Search">
+        </label>
+        <div class="avatar" id="avatar"></div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- card -->
+      <section class="pane c-card" aria-label="Your card">
+        <div class="vcard" id="vcard">
+          <div class="row">
+            <div class="brand">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3 42 10v13c0 11-7.5 19.5-18 22C13.5 42.5 6 34 6 23V10z" fill="#fff" opacity=".95"/><path d="M16 17v9a8 8 0 0 0 16 0v-9" fill="none" stroke="#1738c9" stroke-width="3.5" stroke-linecap="round"/></svg>
+              SUB
+            </div>
+            <span style="font-weight:600;opacity:.85" id="planName">Union</span>
+          </div>
+          <div class="chip"></div>
+          <div>
+            <div class="num" id="cnum">4821 •••• •••• 2206</div>
+            <div class="meta" style="margin-top:14px">
+              <div><small>Card holder</small><span id="cardHolder"></span></div>
+              <div><small>Expires</small>09/29</div>
+            </div>
+          </div>
+        </div>
+        <div class="lockrow">
+          <button class="pill" id="freeze"><span data-ic="lock"></span><span id="freezeTxt">Freeze card</span></button>
+          
+        </div>
+      </section>
+
+      <!-- balance + flow (st-core chart) -->
+      <section class="pane c-flow" aria-label="Balance and cash flow">
+        <div class="head">
+          <div>
+            <p class="sub">Total balance</p>
+            <div class="big"><sup id="curSym"></sup><span id="bal">0</span><span class="delta" id="delta"></span></div>
+          </div>
+          <div class="seg" role="group" aria-label="Flow type" id="flowType">
+            <button aria-pressed="true" data-v="spend">Spending</button>
+            <button aria-pressed="false" data-v="income">Income</button>
+          </div>
+        </div>
+        <div class="kpis">
+          <div>Checking<b>$12,480.20</b></div>
+          <div>Savings<b>$31,905.75</b></div>
+          <div>Union Vault<b>$8,240.00</b></div>
+        </div>
+        <div class="st-chart" id="flowChart">
+          <div class="chart-fill"></div>
+          <div class="chart-line"></div>
+        </div>
+        <p class="sub" style="margin-top:12px" id="insight">Trend chart uses sample data until it is wired to your history</p>
+      </section>
+
+      <!-- safety -->
+      <section class="pane c-safe" aria-label="Safety score">
+        <div class="head"><div><h2>Safety score</h2><p class="sub" id="scoreSub">Live from your account</p></div></div>
+        <div class="gauge">
+          <div class="ring" role="img" aria-label="Safety score gauge">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(2,8,40,.8)" stroke-width="11"/>
+              <circle id="gArc" cx="60" cy="60" r="52" fill="none" stroke="url(#gg)" stroke-width="11" stroke-linecap="round" stroke-dasharray="326.73" stroke-dashoffset="326.73" style="transition:stroke-dashoffset 1.4s cubic-bezier(.2,.9,.2,1) .4s;filter:drop-shadow(0 0 8px rgba(53,212,255,.8))"/>
+              <defs><linearGradient id="gg"><stop offset="0" stop-color="#1f55ff"/><stop offset="1" stop-color="#3df0b4"/></linearGradient></defs>
+            </svg>
+            <div class="t"><div id="scoreNum">—<small>out of 100</small></div></div>
+          </div>
+          <div class="checks" id="safetyChecks"></div>
+        </div>
+        <div class="limit">
+          <div class="l"><span>Daily transfer limit</span><b id="limTxt">—</b></div>
+          <div class="track"><div class="fill" id="limFill" style="width:0%"></div></div>
+        </div>
+        <p class="sub" id="scoreHint" style="margin-top:12px"></p>
+      </section>
+
+      <!-- transactions -->
+      <section class="pane c-tx" aria-label="Recent activity">
+        <div class="head">
+          <div><h2>Recent activity</h2><p class="sub">Last payments · fees applied</p></div>
+          <a href="history.html" class="btn ghost sm">View all</a>
+        </div>
+        <div class="tx" id="tx"></div>
+      </section>
+
+      <!-- goals / quick actions -->
+      <section class="pane c-goals" aria-label="Quick actions">
+        <div class="head"><div><h2>Quick actions</h2><p class="sub">Request, transfer, withdraw</p></div></div>
+        <div class="quick" style="flex-direction:column">
+          <a href="request.html" class="btn">Create payment request</a>
+          <a href="transfers.html" class="btn ghost">SUB-to-SUB transfer</a>
+          <a href="withdraw.html" class="btn ghost">Request withdrawal</a>
+        </div>
+        <div class="charge-note" style="margin-top:18px">
+          Protection fee: <b>1.5%</b> on inbound Paystack · <b>1% + fixed</b> on withdrawals · <b>Free</b> SUB-to-SUB. Pro pays half.
+        </div>
+      </section>
+
+      <!-- vault notice -->
+      <section class="pane" aria-label="Temporary vault notice" style="grid-column:1/-1;border:1px solid rgba(255,180,80,.35);background:rgba(255,140,0,.06)">
+        <div class="head"><div><h2>Temporary vault — not a bank</h2>
+          <p class="sub">We are not licensed or fully KYC-verified to hold your money long-term.</p></div></div>
+        <p style="color:var(--mist);line-height:1.55;margin-bottom:14px">
+          Treat your balance as short-term settlement only. Move funds to your own bank account promptly.
+          Idle balances may trigger reminders or guided withdrawal flows.
+        </p>
+        <div class="quick" style="flex-wrap:wrap;gap:10px">
+          <a href="withdraw.html" class="btn sm">Withdraw to bank</a>
+          <a href="settings.html" class="btn ghost sm">Manage payout accounts</a>
+          <a href="faq.html" class="btn ghost sm">Why this matters</a>
+        </div>
+      </section>
+
+      <!-- in-dashboard FAQ -->
+      <section class="pane" aria-label="Dashboard FAQ" style="grid-column:1/-1">
+        <div class="head"><div><h2>Quick FAQ</h2><p class="sub">Common questions · <a href="faq.html">full FAQ</a></p></div></div>
+        <div id="dashFaq" style="display:grid;gap:10px">
+          <details style="border:1px solid var(--edge);border-radius:12px;padding:12px 14px;background:rgba(4,14,60,.35)">
+            <summary style="cursor:pointer;font-weight:600">Is this a bank account?</summary>
+            <p class="sub" style="margin-top:8px">No. Safety Union Backup is a temporary settlement vault. Withdraw to your real bank.</p>
+          </details>
+          <details style="border:1px solid var(--edge);border-radius:12px;padding:12px 14px;background:rgba(4,14,60,.35)">
+            <summary style="cursor:pointer;font-weight:600">Why do I need to withdraw?</summary>
+            <p class="sub" style="margin-top:8px">We lack the licence and full KYC required to custody funds long-term. Keeping money here indefinitely is not supported.</p>
+          </details>
+          <details style="border:1px solid var(--edge);border-radius:12px;padding:12px 14px;background:rgba(4,14,60,.35)">
+            <summary style="cursor:pointer;font-weight:600">How does the safety score work?</summary>
+            <p class="sub" style="margin-top:8px">It reflects real account state: MFA, verified payout account, plan tier, and related checks. Complete the open items to raise it.</p>
+          </details>
+          <details style="border:1px solid var(--edge);border-radius:12px;padding:12px 14px;background:rgba(4,14,60,.35)">
+            <summary style="cursor:pointer;font-weight:600">Where are Privacy &amp; Terms?</summary>
+            <p class="sub" style="margin-top:8px"><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a> · <a href="faq.html">Full FAQ</a></p>
+          </details>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="../js/sub-core.js"></script>
+
+<script src="../js/pages/dashboard.js"></script>
+</body>
+</html>

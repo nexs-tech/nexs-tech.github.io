@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Withdraw – SUB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/sub-theme.css">
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <svg class="logo" viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fd8ff"/><stop offset="1" stop-color="#1f55ff"/></linearGradient></defs><path d="M24 3 42 10v13c0 11-7.5 19.5-18 22C13.5 42.5 6 34 6 23V10z" fill="url(#lg)"/><path d="M16 17v9a8 8 0 0 0 16 0v-9" fill="none" stroke="#02105c" stroke-width="3.5" stroke-linecap="round"/></svg>
+    <nav class="nav">
+      <a href="dashboard.html" data-ic="home"></a>
+      <a href="request.html" data-ic="link"></a>
+      <a href="transfers.html" data-ic="swap"></a>
+      <a href="history.html" data-ic="chart"></a>
+      <a href="withdraw.html" aria-current="page" data-ic="wallet"></a>
+      <a href="pro.html" data-ic="shield"></a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="nav"><a href="settings.html" data-ic="gear"></a></div>
+  </aside>
+
+  <main>
+    <header class="top">
+      <div>
+        <h1>Request withdrawal</h1>
+        <p>We verify every request, then deliver to your stored or custom bank details.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="pane" style="grid-column:span 7">
+        <h2>Withdrawal form</h2>
+        <form id="wdForm">
+          <div class="field">
+            <label for="wdAmount">Amount (<span class="cur"></span>)</label>
+            <input type="number" id="wdAmount" min="10" step="0.01" required placeholder="500.00">
+          </div>
+          <div class="field">
+            <label for="storedBank">Payout account</label>
+            <select id="storedBank"></select>
+            <p class="sub" style="margin-top:6px">Add or manage accounts in <a href="settings.html" style="color:var(--cyan)">Settings</a>.</p>
+          </div>
+          <div class="charge-note" id="wdFee">
+            Loading fees...
+          </div>
+          <button type="submit" class="btn full" style="margin-top:16px">Submit for verification</button>
+        </form>
+      </section>
+
+      <section class="pane" style="grid-column:span 5">
+        <h2>Process</h2>
+        <ol style="color:var(--mist);line-height:1.7;padding-left:18px;margin-top:12px;font-size:.95rem">
+          <li>You submit amount + destination.</li>
+          <li>SUB risk engine + manual review (if needed) verifies identity and source of funds.</li>
+          <li>Approved requests are paid out via partner rails (Paystack transfer / local settlement).</li>
+          <li>Status updates appear in History. Pro members get priority queue.</li>
+        </ol>
+        <div class="charge-note" style="margin-top:18px">
+          Typical delivery: 1–24 hours. Large amounts may require extra verification.
+        </div>
+      </section>
+
+      <section class="pane" style="grid-column:span 12">
+        <h2>Your withdrawal requests</h2>
+        <div class="table-wrap" style="margin-top:12px">
+          <table>
+            <thead><tr><th>Date</th><th>Amount</th><th>Fee</th><th>Destination</th><th>Status</th></tr></thead>
+            <tbody id="wdList"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<script src="../js/sub-core.js"></script>
+
+<script src="../js/pages/withdraw.js"></script>
+</body>
+</html>

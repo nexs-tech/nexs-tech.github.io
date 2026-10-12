@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FAQ – Safety Union Backup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/sub-theme.css">
+<style>
+  .legal{max-width:720px;margin:0 auto;padding:40px 20px 80px;position:relative;z-index:1}
+  .legal h1{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.4rem);margin-bottom:8px}
+  .legal h2{font-family:var(--display);font-size:1.15rem;margin:24px 0 8px;color:var(--cyan)}
+  .legal p,.legal li{color:var(--mist);line-height:1.65;margin-bottom:10px}
+  .legal a{color:var(--cyan)}
+  .back{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;color:var(--mist);text-decoration:none}
+  .back:hover{color:var(--ice)}
+  .warn{border:1px solid rgba(255,180,80,.4);background:rgba(255,140,0,.08);border-radius:14px;padding:16px 18px;margin:20px 0}
+  details{border:1px solid var(--edge);border-radius:14px;padding:14px 16px;margin-bottom:12px;background:rgba(4,14,60,.35)}
+  summary{cursor:pointer;font-weight:600;color:var(--ice);list-style:none}
+  summary::-webkit-details-marker{display:none}
+  details[open] summary{margin-bottom:10px;color:var(--cyan)}
+</style>
+</head>
+<body>
+<div class="legal">
+  <a class="back" href="../index.html">← Back to home</a>
+  <h1>Frequently asked questions</h1>
+  <p class="sub">Safety Union Backup · temporary settlement vault</p>
+
+  <div class="warn">
+    <strong>Remember:</strong> SUB is not a bank. Move money to your real bank account; we are not licensed or KYC-verified to hold funds long-term.
+  </div>
+
+  <details open>
+    <summary>Is Safety Union Backup a bank?</summary>
+    <p>No. It is a temporary payment-settlement product. Balances are short-lived vaults so you can receive Paystack payments and transfer or withdraw them. We do not offer deposit accounts, interest, or deposit insurance.</p>
+  </details>
+
+  <details>
+    <summary>Why do you tell me to withdraw to a real bank account?</summary>
+    <p>We do not have the regulatory licence or full KYC programme required to custody customer money for extended periods. Holding balances indefinitely would put both you and the operators at legal risk. Please withdraw promptly; the product may prompt or guide you to do so automatically for aged balances.</p>
+  </details>
+
+  <details>
+    <summary>How do I receive money?</summary>
+    <p>Create a payment request from the dashboard. Share the link. The payer pays via Paystack. After webhook verification the net amount (after protection fee) credits your SUB vault.</p>
+  </details>
+
+  <details>
+    <summary>What fees apply?</summary>
+    <p>Inbound payments: protection fee (default ~1.5%). Withdrawals: percentage + fixed fee. SUB-to-SUB transfers: free of SUB fees. Pro members get a fee discount. Exact rates are shown in-app and recomputed on the server.</p>
+  </details>
+
+  <details>
+    <summary>How do withdrawals work?</summary>
+    <p>Add a payout account (we verify the name with the bank via Paystack). Enable MFA. Request a withdrawal. New accounts have a short safety cooldown. Admins may approve large or first-time payouts. Funds then leave via Paystack transfer.</p>
+  </details>
+
+  <details>
+    <summary>What is the Safety score?</summary>
+    <p>A live score based on your real security posture: MFA enabled, verified payout account, plan tier, and related checks. Completing the suggested actions raises the score. It is not a credit score.</p>
+  </details>
+
+  <details>
+    <summary>Is my full bank account number stored?</summary>
+    <p>No. After verification we keep bank code, last four digits, and resolved account name only.</p>
+  </details>
+
+  <details>
+    <summary>Can I transfer to another SUB user?</summary>
+    <p>Yes — SUB-to-SUB transfers are instant, free of SUB fees, and stay inside the ledger. Use the recipient’s SUB tag.</p>
+  </details>
+
+  <details>
+    <summary>What happens if I leave money sitting?</summary>
+    <p>You will see reminders and safety prompts encouraging withdrawal. Operators may introduce stricter automatic guidance or limits on idle balances because the service is not licensed for long-term custody.</p>
+  </details>
+
+  <details>
+    <summary>Where can I read the legal documents?</summary>
+    <p><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a></p>
+  </details>
+
+  <p style="margin-top:28px"><a href="login.html">Log in</a> · <a href="signup.html">Create account</a></p>
+</div>
+</body>
+</html>

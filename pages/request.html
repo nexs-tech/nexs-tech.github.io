@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Create payment request – SUB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/sub-theme.css">
+</head>
+<body>
+<div class="app">
+  <aside class="rail" aria-label="Main">
+    <svg class="logo" viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fd8ff"/><stop offset="1" stop-color="#1f55ff"/></linearGradient></defs><path d="M24 3 42 10v13c0 11-7.5 19.5-18 22C13.5 42.5 6 34 6 23V10z" fill="url(#lg)"/><path d="M16 17v9a8 8 0 0 0 16 0v-9" fill="none" stroke="#02105c" stroke-width="3.5" stroke-linecap="round"/></svg>
+    <nav class="nav">
+      <a href="dashboard.html" title="Home" data-ic="home"></a>
+      <a href="request.html" aria-current="page" title="Request" data-ic="link"></a>
+      <a href="transfers.html" title="Transfers" data-ic="swap"></a>
+      <a href="history.html" title="History" data-ic="chart"></a>
+      <a href="withdraw.html" title="Withdraw" data-ic="wallet"></a>
+      <a href="pro.html" title="Pro" data-ic="shield"></a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="nav"><a href="settings.html" data-ic="gear"></a></div>
+  </aside>
+
+  <main>
+    <header class="top">
+      <div>
+        <h1>Payment request</h1>
+        <p>Create a temporary payment account. Anyone with the link can pay via Paystack. Funds settle to your safer SUB vault.</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="pane" style="grid-column:span 7">
+        <h2>New one-time request</h2>
+        <p class="sub" style="margin-bottom:20px">Temporary details expire after payment or 72 hours.</p>
+        <form id="reqForm">
+          <div class="field">
+            <label for="amount">Amount (<span class="cur"></span>)</label>
+            <input type="number" id="amount" min="1" step="0.01" required placeholder="250.00">
+          </div>
+          <div class="field">
+            <label for="reason">Reason / note</label>
+            <input type="text" id="reason" required placeholder="Invoice #1042 – Design work">
+          </div>
+          <div class="field">
+            <label for="payerHint">Optional payer hint</label>
+            <input type="text" id="payerHint" placeholder="Name or email of expected payer">
+          </div>
+          <div class="charge-note" id="feePreview">
+            Loading fees...
+            <span id="proNote" style="display:none"> · Pro discount applied</span>
+          </div>
+          <button type="submit" class="btn full" style="margin-top:16px">Generate payment link</button>
+        </form>
+      </section>
+
+      <section class="pane" style="grid-column:span 5">
+        <h2>How it works</h2>
+        <ol style="color:var(--mist);line-height:1.7;padding-left:18px;margin-top:12px;font-size:.95rem">
+          <li>You create a request → temporary reference + public link.</li>
+          <li>Share the link or account details with the payer.</li>
+          <li>Payer completes Paystack one-time payment.</li>
+          <li>Webhook (Cloudflare Worker → Supabase) verifies and credits your safer vault minus fee.</li>
+          <li>You see the settlement in History with full audit trail.</li>
+        </ol>
+        <div class="charge-note" style="margin-top:20px">
+          Temporary accounts are single-use. Card can be used for SUB-to-SUB only while the request is open.
+        </div>
+      </section>
+
+      <section class="pane" style="grid-column:span 12;display:none" id="resultPane">
+        <h2>Your temporary payment account</h2>
+        <p class="sub">Share this link or the reference. It is valid until paid or expired.</p>
+        <div style="margin-top:18px;padding:18px;border-radius:16px;background:rgba(2,8,40,.6);border:1px solid var(--edge)">
+          <div class="field">
+            <label>Public payment link</label>
+            <div style="display:flex;gap:10px">
+              <input type="text" id="payLink" readonly>
+              <button class="btn sm" id="copyLink">Copy</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Reference</label>
+            <input type="text" id="refCode" readonly>
+          </div>
+          <div class="field">
+            <label>Amount · Net after fee</label>
+            <input type="text" id="netAmt" readonly>
+          </div>
+        </div>
+        <p style="margin-top:14px;color:var(--mist);font-size:.9rem">Demo: open the link in a new tab to simulate the payer experience.</p>
+      </section>
+    </div>
+  </main>
+</div>
+<script src="../js/sub-core.js"></script>
+
+<script src="../js/pages/request.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>History & performance – SUB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/sub-theme.css">
+<script src="https://cdn.jsdelivr.net/npm/fscss@1.2.5/runtime.min.js" async></script>
+<style>
+  @import((*) from st-core@v2)
+  @st-root()
+  @arr perfData[28, 23, 38, 78, 65, 60, 52, 55, 72, 90, 82, 95]
+  @st-chart-fill(.chart-fill, perfData)
+  @st-chart-line(.chart-line, perfData)
+  .st-chart {
+    @st-chart-points(perfData)
+    position: relative; height: 180px; width: 100%;
+    border-radius: 12px; overflow: hidden; background: rgba(2,8,40,.4);
+    
+  }
+  .st-chart .chart-fill { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(61,240,180,.4), transparent);
+  transition: clip-path 1s ease-out;
+  }
+  .st-chart .chart-line { position: absolute; inset: 0; filter: drop-shadow(0 0 6px rgba(61,240,180,.7));
+    transition: clip-path 1s ease-out;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <svg class="logo" viewBox="0 0 48 48"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fd8ff"/><stop offset="1" stop-color="#1f55ff"/></linearGradient></defs><path d="M24 3 42 10v13c0 11-7.5 19.5-18 22C13.5 42.5 6 34 6 23V10z" fill="url(#lg)"/><path d="M16 17v9a8 8 0 0 0 16 0v-9" fill="none" stroke="#02105c" stroke-width="3.5" stroke-linecap="round"/></svg>
+    <nav class="nav">
+      <a href="dashboard.html" data-ic="home"></a>
+      <a href="request.html" data-ic="link"></a>
+      <a href="transfers.html" data-ic="swap"></a>
+      <a href="history.html" aria-current="page" data-ic="chart"></a>
+      <a href="withdraw.html" data-ic="wallet"></a>
+      <a href="pro.html" data-ic="shield"></a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="nav"><a href="settings.html" data-ic="gear"></a></div>
+  </aside>
+
+  <main>
+    <header class="top">
+      <div>
+        <h1>History & performance</h1>
+        <p>All settlements, fees, and safety-protected activity</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="pane" style="grid-column:span 8">
+        <div class="head">
+          <div><h2>Net volume (last 12 periods)</h2><p class="sub">chart</p></div>
+        </div>
+        <div class="st-chart">
+          <div class="chart-fill"></div>
+          <div class="chart-line"></div>
+        </div>
+      </section>
+      <section class="pane" style="grid-column:span 4">
+        <h2>Fee summary</h2>
+        <p class="sub">This month</p>
+        <div style="margin-top:16px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:10px"><span style="color:var(--mist)">Protection fees</span><b id="feeTotal">$0.00</b></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:10px"><span style="color:var(--mist)">Withdrawals</span><b id="wdTotal">$0.00</b></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--mist)">SUB-to-SUB</span><b style="color:var(--good)">$0.00</b></div>
+        </div>
+        <div class="charge-note" style="margin-top:18px">Pro accounts pay 50% of listed fees.</div>
+      </section>
+
+      <section class="pane" style="grid-column:span 12">
+        <div class="head">
+          <div><h2>Transaction log</h2><p class="sub">Includes temporary-account settlements</p></div>
+          <div class="seg" id="txFilter">
+            <button aria-pressed="true" data-v="all">All</button>
+            <button aria-pressed="false" data-v="in">In</button>
+            <button aria-pressed="false" data-v="out">Out</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>When</th><th>Type</th><th>Details</th><th>Gross</th><th>Fee</th><th>Net</th><th>Status</th></tr>
+            </thead>
+            <tbody id="histBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<script src="../js/sub-core.js"></script>
+
+<script src="../js/pages/history.js"></script>
+</body>
+</html>

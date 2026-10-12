@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy – Safety Union Backup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/sub-theme.css">
+<style>
+  .legal{max-width:720px;margin:0 auto;padding:40px 20px 80px;position:relative;z-index:1}
+  .legal h1{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.4rem);margin-bottom:8px}
+  .legal h2{font-family:var(--display);font-size:1.25rem;margin:28px 0 10px;color:var(--cyan)}
+  .legal p,.legal li{color:var(--mist);line-height:1.65;margin-bottom:12px}
+  .legal ul{padding-left:1.2rem;margin-bottom:16px}
+  .legal a{color:var(--cyan)}
+  .back{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;color:var(--mist);text-decoration:none}
+  .back:hover{color:var(--ice)}
+</style>
+</head>
+<body>
+<div class="legal">
+  <a class="back" href="../index.html">← Back to home</a>
+  <h1>Privacy Policy</h1>
+  <p class="sub">Last updated: October 2026 · Safety Union Backup (“SUB”, “we”, “us”)</p>
+
+  <h2>1. Who we are</h2>
+  <p>Safety Union Backup is a temporary payment-settlement service. We are <strong>not a bank</strong>, deposit-taking institution, or licensed money transmitter in the sense of holding customer funds long-term. We process payments via Paystack and settle into short-lived vault balances so you can receive money and move it to your own bank account.</p>
+
+  <h2>2. Data we collect</h2>
+  <ul>
+    <li><strong>Account data:</strong> email, full name, password hash (managed by Supabase Auth), SUB tag, plan status.</li>
+    <li><strong>Transaction data:</strong> payment requests, ledger entries, withdrawal requests, fees, timestamps, and references needed for settlement and audit.</li>
+    <li><strong>Payout details:</strong> bank code, last 4 digits of account number, resolved account name. Full account numbers are not stored after verification.</li>
+    <li><strong>Security signals:</strong> MFA factors, session cookies, IP and user-agent on security-sensitive actions, rate-limit counters, audit log entries.</li>
+    <li><strong>Payment processor data:</strong> Paystack references, verification responses, and webhook payloads required to settle funds safely.</li>
+  </ul>
+
+  <h2>3. How we use data</h2>
+  <ul>
+    <li>Create and secure your account, sessions, and MFA.</li>
+    <li>Process inbound Paystack payments, SUB-to-SUB transfers, and withdrawals.</li>
+    <li>Compute fees, enforce limits, prevent fraud and double-credits.</li>
+    <li>Comply with legal requests and maintain an append-only audit trail.</li>
+    <li>Improve reliability and surface safety scores and prompts to withdraw funds.</li>
+  </ul>
+
+  <h2>4. Legal basis & retention</h2>
+  <p>We process data to perform the service you request and to protect the integrity of the ledger. Transaction and audit records are retained as long as needed for dispute resolution, security, and applicable law. You may request account closure; residual ledger rows may be retained in anonymised or restricted form where required for financial integrity.</p>
+
+  <h2>5. Sharing</h2>
+  <p>We share data only with:</p>
+  <ul>
+    <li><strong>Paystack</strong> — to initiate and verify payments and payouts.</li>
+    <li><strong>Supabase / Cloudflare</strong> — infrastructure providers under their respective terms.</li>
+    <li>Authorities when legally required.</li>
+  </ul>
+  <p>We do not sell personal data.</p>
+
+  <h2>6. Security</h2>
+  <p>Browsers never talk directly to money tables. Balances change only inside locked SQL functions executed by a service-role Worker. Sessions use HttpOnly, Secure, SameSite=Strict cookies. MFA is required for withdrawals and sensitive changes. Full account numbers are not retained after bank-name verification.</p>
+
+  <h2>7. Your rights</h2>
+  <p>Depending on your jurisdiction you may request access, correction, deletion, or restriction of personal data. Contact us using the email associated with your account or the operator contact published on the site. Some records cannot be deleted while they form part of the financial ledger integrity model.</p>
+
+  <h2>8. Children</h2>
+  <p>The service is not directed at children under 18. Do not create an account if you are under the applicable age of majority.</p>
+
+  <h2>9. Changes</h2>
+  <p>We may update this policy. Material changes will be reflected on this page with a new “Last updated” date.</p>
+
+  <h2>10. Contact</h2>
+  <p>Questions about privacy: use the support channel shown in your dashboard settings or the operator email published by the project owner.</p>
+</div>
+</body>
+</html>

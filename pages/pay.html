@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pay – Safety Union Backup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/sub-theme.css">
+</head>
+<body>
+<div class="auth-wrap">
+  <div class="auth-card" style="max-width:440px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <svg width="36" height="36" viewBox="0 0 48 48">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7fd8ff"/><stop offset="1" stop-color="#1f55ff"/></linearGradient></defs>
+        <path d="M24 3 42 10v13c0 11-7.5 19.5-18 22C13.5 42.5 6 34 6 23V10z" fill="url(#lg)"/>
+        <path d="M16 17v9a8 8 0 0 0 16 0v-9" fill="none" stroke="#02105c" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+      <span style="font-family:var(--display);font-weight:800">Safety Union Backup</span>
+    </div>
+    <h1 style="font-size:1.5rem">One-time payment</h1>
+    <p class="sub" id="statusLine">Loading request…</p>
+
+    <div id="payBox" style="display:none">
+      <div style="padding:18px;border-radius:16px;background:rgba(2,8,40,.55);border:1px solid var(--edge);margin-bottom:20px">
+        <div style="color:var(--mist);font-size:.85rem">You are paying</div>
+        <div style="font-family:var(--display);font-weight:800;font-size:2rem;margin:4px 0" id="payAmount">$0.00</div>
+        <div style="color:var(--mist);font-size:.9rem" id="payReason">—</div>
+        <div style="margin-top:10px;font-size:.82rem;color:var(--mist)">Ref: <span id="payRef"></span></div>
+      </div>
+      <div class="field">
+        <label for="payerEmail">Your email (receipt)</label>
+        <input type="email" id="payerEmail" required placeholder="payer@email.com">
+      </div>
+      <div class="field">
+        <label for="payerName">Your name</label>
+        <input type="text" id="payerName" required placeholder="Full name">
+      </div>
+      <button class="btn full" id="payBtn">Pay securely with Paystack</button>
+      <p style="margin-top:14px;font-size:.82rem;color:var(--mist);text-align:center">
+        Powered by Paystack · Funds settle to the recipient’s safer SUB vault after verification.
+      </p>
+    </div>
+
+    <div id="doneBox" style="display:none;text-align:center">
+      <div style="font-size:3rem;margin-bottom:12px">✓</div>
+      <h2 style="font-family:var(--display)">Payment successful</h2>
+      <p class="sub">The recipient will see the net amount in their Union Vault shortly.</p>
+    </div>
+
+    <div id="errBox" style="display:none">
+      <p style="color:var(--warn)">This payment link is invalid, already paid, or expired.</p>
+      <a href="../index.html" class="btn ghost full" style="margin-top:16px">Back to SUB</a>
+    </div>
+  </div>
+</div>
+<script src="../js/sub-core.js"></script>
+
+<script src="../js/pages/pay.js"></script>
+</body>
+</html>
+
